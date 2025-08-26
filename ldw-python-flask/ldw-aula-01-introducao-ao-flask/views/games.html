@@ -1,0 +1,31 @@
+    {% extends 'base.html' %}
+    <h2>Esta página é de games</h2>
+    <h3>Jogo em destaque:</h3>
+    <ul>
+        <li>Titulo: <strong>{{title}}</strong></li>
+        <li>Ano: <strong>{{year}}</strong></li>
+        <li>Categoria: <strong>{{category}}</strong></li>
+    </ul>
+    <p>O jogo {{title}} tem {{2025-year}} anos.</p>
+
+    {# comentário em jinja 2 #}
+
+    <h3>Está sendo jogado por:</h3>
+    <ol>
+        {% for player in players %}
+            <li>{{player}}</li>
+        {% endfor %}
+    </ol>
+    <hr>
+    <form action="{{url_for('games')}}" method="POST">
+        <label for="player">Jogador</label>
+        <input type="text" name="player">
+        <input type="submit" value="Entrar">
+    </form>
+    <hr>
+
+    <h4>Console mais bem avaliado:</h4>
+    {% for key, value in console.items() %}
+    {{key}} : {{value}} <br>
+    {% endfor %}
+
