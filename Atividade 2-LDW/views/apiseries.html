@@ -1,9 +1,19 @@
-<h2>Lista de Séries (API TVMaze)</h2>
-<ul>
-    {% for s in seriesList %}
-        <li>
-            <a href="/apiseries/{{ s.id }}">{{ s.name }}</a>  
-            ({{ s.premiered }})
-        </li>
-    {% endfor %}
-</ul>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Catálogo de Séries</h2>
+    <div class="card-grid">
+        {% for s in seriesList %}
+            <div class="card">
+                <img src="{{ s.image.medium if s.image else 'https://via.placeholder.com/220x300?text=Sem+Imagem' }}" alt="{{ s.name }}">
+                <div class="card-content">
+                    <h3 class="card-title">{{ s.name }}</h3>
+                    <p class="card-rating">{{ s.premiered if s.premiered else 'Data desconhecida' }}</p>
+                    <a href="/apiseries/{{ s.id }}" class="btn btn-primary">+ Info</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

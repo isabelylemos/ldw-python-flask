@@ -37,20 +37,23 @@ def init_app(app):
     @app.route("/apiseries", methods=['GET', 'POST'])
     @app.route("/apiseries/<int:id>", methods=['GET', 'POST'])
     def apiseries(id=None):
-        url = "https://api.tvmaze.com/shows"  # endpoint que retorna várias séries
-        response = urllib.request.urlopen(url)  
-        data = response.read()
-        seriesList = json.loads(data)  # transforma o JSON em dicionário
+        if id:
+            url = f"https://api.tvmaze.com/shows/{id}"
+            try:
+                response = urllib.request.urlopen(url)
+                data = response.read()
+                serieInfo = json.loads(data)
 
-        if id:  # se o usuário passou um ID
-            serieInfo = {}
-            for serie in seriesList:
-                if serie['id'] == id:  
-                    serieInfo = serie
-                    break
-            if serieInfo:
-                return render_template('serieInfo.html', serieInfo=serieInfo)
-            else:
-                return f"Série com ID {id} não encontrada."
+                if serieInfo.get("id"):
+                    return render_template("serieInfo.html", serieInfo=serieInfo)
+                else:
+                    return f"Série com ID {id} não encontrada."
+            except:
+                return f"Erro ao buscar a série com ID {id}."
         else:
-            return render_template('apiseries.html', seriesList=seriesList)
+            url = "https://api.tvmaze.com/shows"
+            response = urllib.request.urlopen(url)
+            data = response.read()
+            seriesList = json.loads(data)[:44]
+
+            return render_template("apiseries.html", seriesList=seriesList)
