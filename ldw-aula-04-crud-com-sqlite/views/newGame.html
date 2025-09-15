@@ -3,7 +3,7 @@
     {% block content %}
     <h1>Cadastro de jogos</h1>
     <hr>
-    <form action="{{ url_for('newGame') }}" method="POST">
+    <form action="{{url_for('newgame')}}" method="POST">
         <label>Título:</label>
         <input type="text" name="title">
         <label>Ano:</label>
@@ -14,7 +14,12 @@
     </form>
     <br>
     <hr>
-    <table>
+    <table> 
+        <tr>
+            <th>Título</th>
+            <th>Ano</th>
+            <th>Categoria</th>
+        </tr>
         {% for game in gamelist %}
         <tr>
             <td>{{game.Título}}</td>
@@ -23,4 +28,5 @@
         </tr>
         {% endfor %}
     </table>
+
     {% endblock content %}

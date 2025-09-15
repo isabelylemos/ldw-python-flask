@@ -1,8 +1,7 @@
     {% extends 'base.html' %}
-
     {% block content %}
-    <h2>Está é a página de jogos!</h2>
-    <h3>Jogo em destque:</h3>
+    <h1>Esta é página de games!</h1>
+    <h3>Jogo em destaque:</h3>
     <ul>
         <li>Título: <strong>{{title}}</strong></li>
         <li>Ano: <strong>{{year}}</strong></li>
@@ -12,7 +11,6 @@
 
     {# Esse é um comentário em jinja2 #}
 
-    {# iterar em uma lista #}
     <h3>Está sendo jogado por:</h3>
     <ol>
         {% for player in players %}
@@ -20,8 +18,7 @@
         {% endfor %}
     </ol>
     <hr>
-    <!-- aqui eu devo enviar os dados para um função que vai tratar os dados (view function) e não para uma página -->
-    <form action="{{ url_for('games') }}" method="POST">
+    <form action="{{url_for('games')}}" method="POST">
         <label for="player">Jogador:</label>
         <input type="text" name="player" class="form-control w-50">
         <input type="submit" value="Entrar" class="btn btn-success">
@@ -29,12 +26,11 @@
     <hr>
 
     <h4>Console mais bem avaliado:</h4>
-    {# posso mudar o nome da chave e valor pro nome que eu quiser #}
     {% for key, value in console.items() %}
     <details>
         <summary>{{key}}</summary>
-        <p>{{value}}</p> 
+        <p>{{value}}</p>
     </details>
     {% endfor %}
+    
     {% endblock content %}
-
