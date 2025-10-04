@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="col-md-6 m-auto">
+    <h2 style="text-align: center;">Editar série</h2>
+    <br />
+
+    <form action="{{url_for('serieEdit', id=s.id)}}" method="POST">
+      <input type="text" name="titulo" value="{{s.titulo}}" required />
+      <input type="number" name="ano" value="{{s.ano}}" required />
+      <input type="text" name="genero" value="{{s.genero}}" required />
+
+      <!-- Select para alterar o ator -->
+      <select name="ator" required
+        style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #333; background: #111; color: #f1f1f1;">
+        {% for ator in atores %}
+        <option value="{{ ator.id }}" {% if s.ator_id == ator.id %} selected {% endif %}>
+          {{ ator.nome }}
+        </option>
+        {% endfor %}
+      </select>
+
+      <div style="display: flex; gap: 8px; margin-top: 15px;">
+        <button type="submit" class="btn btn-primary" onclick="return confirm('Confirma as alterações?')">
+            Alterar
+        </button>
+        <a href="{{ url_for('seriesEstoque') }}" class="btn btn-danger">
+            Cancelar
+        </a>
+        </div>
+
+    </form>
+  </div>
+</div>
+{% endblock content %}

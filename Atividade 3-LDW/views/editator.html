@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="col-md-6 m-auto">
+    <h2 style="text-align: center;">Editar ator</h2>
+    <br />
+
+    <form action="{{url_for('atorEdit', id=ator.id)}}" method="POST">
+      <input type="text" name="nome" value="{{ator.nome}}" required />
+      <input type="text" name="idade" value="{{ator.idade}}" required />
+      <input type="text" name="pais" value="{{ator.pais}}" required />
+
+      <div style="display: flex; gap: 8px; margin-top: 15px;">
+  <button type="submit" class="btn btn-primary" onclick="return confirm('Confirma as alterações?')">
+    Alterar
+  </button>
+  <a href="{{ url_for('seriesEstoque') }}" class="btn btn-danger">
+    Cancelar
+  </a>
+</div>
+
+    </form>
+  </div>
+</div>
+{% endblock content %}

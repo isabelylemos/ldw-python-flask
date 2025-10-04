@@ -1,0 +1,79 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container">
+  <h2>Controle de Estoque - Séries</h2>
+  <br />
+
+  <details>
+    <summary style="cursor: pointer; color: #ffffff; font-weight: bold; margin-bottom: 15px;">
+       Cadastrar nova série:
+    </summary>
+    <div class="col-md-6" style="margin-top: 15px;">
+      <form action="{{url_for('seriesEstoque')}}" method="POST">
+        <input type="text" name="titulo" placeholder="Título" required />
+        <input type="number" name="ano" placeholder="Ano" required />
+        <input type="text" name="genero" placeholder="Gênero" required />
+
+        <!-- SELECT PARA ESCOLHER O ATOR -->
+        <select name="ator" required
+          style="width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; border: 1px solid #333; background: #111; color: #f1f1f1;">
+          <option value="" selected disabled>Selecione um ator...</option>
+          {% for ator in atores %}
+          <option value="{{ator.id}}">{{ator.nome}}</option>
+          {% endfor %}
+        </select>
+
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <input type="submit" value="Cadastrar" class="btn btn-primary" />
+          <input type="reset" value="Limpar" class="btn btn-danger" />
+        </div>
+      </form>
+    </div>
+  </details>
+  <br>
+  <hr />
+  <br><br>
+  <p style="font-size: 20px; font-weight: bold;">Séries Cadastradas:</p>
+  
+
+  <table class="table">
+    <thead>
+      <tr>
+        
+        <th>Título</th>
+        <th>Ano</th>
+        <th>Gênero</th>
+        <th>Ator</th>
+        <th style="text-align: center" colspan="2">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in seriesestoque.items %}
+      <tr>
+        <td>{{s.titulo}}</td>
+        <td>{{s.ano}}</td>
+        <td>{{s.genero}}</td>
+        <td>{{s.ator.nome}}</td>
+        <td style="text-align: center; width: 130px">
+          <a href="{{url_for('serieEdit', id=s.id)}}" class="btn btn-primary">Editar</a>
+        </td>
+        <td style="text-align: center; width: 130px">
+          <a href="{{url_for('seriesEstoque', id=s.id)}}"
+             class="btn btn-danger"
+             onclick="return confirm('Deseja mesmo excluir a série {{s.titulo}}?')">Excluir</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p style="text-align: center; margin-top: 20px;">
+    {% if seriesestoque.has_prev %}
+    <a href="{{url_for('seriesEstoque', page=seriesestoque.prev_num)}}" class="btn btn-primary"><< Anterior</a>
+    {% endif %}
+    {% if seriesestoque.has_next %}
+    <a href="{{url_for('seriesEstoque', page=seriesestoque.next_num)}}" class="btn btn-primary">Próximo >></a>
+    {% endif %}
+  </p>
+</div>
+{% endblock content %}

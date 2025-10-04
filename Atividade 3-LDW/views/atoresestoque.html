@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h2>Controle de Estoque - Atores</h2>
+  <br />
+
+  <details>
+    <summary style="cursor: pointer; color: #ffffff; font-weight: bold; margin-bottom: 15px;">
+       Cadastrar novo ator:
+    </summary>
+    <div class="col-md-6" style="margin-top: 15px;">
+      <form action="{{url_for('atoresEstoque')}}" method="POST">
+        <input type="text" name="nome" placeholder="Nome" required />
+        <input type="text" name="idade" placeholder="Idade" required />
+        <input type="text" name="pais" placeholder="País" required />
+
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <input type="submit" value="Cadastrar" class="btn btn-primary" />
+          <input type="reset" value="Limpar" class="btn btn-danger" />
+        </div>
+      </form>
+    </div>
+  </details>
+  <br>
+  <hr />
+  <br>
+  <p style="font-size: 20px; font-weight: bold;">Atores Cadastrados:</p>
+  
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>País</th>
+        <th style="text-align: center;" colspan="2">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ator in atoresestoque.items %}
+      <tr>
+        <td>{{ator.nome}}</td>
+        <td>{{ator.idade}}</td>
+        <td>{{ator.pais}}</td>
+        <td style="text-align: center; width: 130px;">
+          <a href="{{url_for('atorEdit', id=ator.id)}}" class="btn btn-primary">Editar</a>
+        </td>
+        <td style="text-align: center; width: 130px;">
+          <a href="{{url_for('atoresEstoque', id=ator.id)}}"
+             class="btn btn-danger"
+             onclick="return confirm('Deseja mesmo excluir o ator {{ator.nome}}?')">Excluir</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p style="text-align: center; margin-top: 20px;">
+    {% if atoresestoque.has_prev %}
+    <a href="{{url_for('atoresEstoque', page=atoresestoque.prev_num)}}" class="btn btn-primary"><< Anterior</a>
+    {% endif %}
+
+    {% if atoresestoque.has_next %}
+    <a href="{{url_for('atoresEstoque', page=atoresestoque.next_num)}}" class="btn btn-primary">Próximo >></a>
+    {% endif %}
+  </p>
+</div>
+{% endblock content %}
